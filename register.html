@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Register – Depta</title>
+  <meta name="theme-color" content="#0a1a3f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Depta">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+  <link rel="icon" href="{{ url_for('static', filename='icon-192.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192.png') }}">
+  <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+  <script src="{{ url_for('static', filename='theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='pwa.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <button class="themebtn" data-theme-btn onclick="toggleTheme()" aria-label="Switch light or dark mode"></button>
+  <div class="lead">
+    <div class="card">
+      <div class="ctr" style="margin:0 0 8px"><button class="btn sm" type="button" onclick="langPick()">🌐 <span data-langname>English</span></button></div>
+      <img class="hero-logo" src="{{ url_for('static', filename='icon-192.png') }}" alt="Depta logo" style="width:72px;height:72px;border-radius:18px">
+      <h1 class="ctr">Create your Depta account</h1>
+      <p class="hint ctr" style="margin:6px 0 4px">Free debt book for your shop. You can link CTone later in Settings.</p>
+      <label for="shop">Shop name</label>
+      <input class="in" id="shop">
+      <label for="cur">Currency (e.g. UGX, KES, TZS)</label>
+      <input class="in" id="cur" maxlength="4" value="{{ currency }}" style="text-transform:uppercase">
+      <label for="nm">Your name</label>
+      <input class="in" id="nm">
+      <label for="ph">Phone</label>
+      <input class="in" id="ph" type="tel">
+      <label for="em">Email</label>
+      <input class="in" id="em" type="email" autocomplete="username">
+      <label for="pw">Password (6+ characters)</label>
+      <input class="in" id="pw" type="password" autocomplete="new-password">
+      <button class="btn n block" id="go" style="margin-top:16px">Create account</button>
+      <p class="msg" id="msg"></p>
+      <p class="hint" style="margin-top:14px">Already registered? <a href="/login">Sign in</a></p>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='common.js') }}"></script>
+  <script>
+    $('#go').onclick = async () => {
+      const b = $('#go');
+      b.disabled = true;
+      const m = $('#msg');
+      m.textContent = '';
+      const body = {
+        name: $('#nm').value,
+        phone: $('#ph').value,
+        email: $('#em').value,
+        password: $('#pw').value,
+        shop_name: $('#shop').value,
+        currency: $('#cur').value
+      };
+      try {
+        const r = await api('/api/register', body);
+        if (r.redirect)
+          location.href = r.redirect;
+        else {
+          m.className = 'msg ok';
+          m.textContent = r.message;
+        }
+      } catch (e) {
+        m.className = 'msg bad';
+        m.textContent = e.message;
+      }
+      b.disabled = false;
+    };
+  </script>
+</body>
+</html>

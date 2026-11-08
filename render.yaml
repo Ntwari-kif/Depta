@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: depta
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATABASE_URL     # SAME Supabase "Session pooler" string you use for CTone -> shared accounts
+        sync: false
+      - key: PV_TZ
+        value: Africa/Nairobi
+      - key: CTONE_URL        # your CTone address, e.g. https://ctone.onrender.com (enables "Open CTone")
+        sync: false

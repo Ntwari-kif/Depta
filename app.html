@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Depta – Debt collector</title>
+  <meta name="theme-color" content="#0a1a3f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Depta">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+  <link rel="icon" href="{{ url_for('static', filename='icon-192.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192.png') }}">
+  <script src="{{ url_for('static', filename='i18n.js') }}"></script>
+  <script src="{{ url_for('static', filename='theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='pwa.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div id="bar"></div>
+  <div class="wrap wide pad">
+    <div id="notice"></div>
+    <div class="atabs" id="tabs">
+      <button data-t="today" class="on">Today</button>
+      <button data-t="debts">Debts</button>
+      <button data-t="people">Customers</button>
+      <button data-t="reports">Reports</button>
+      <button data-t="settings">Settings</button>
+    </div>
+    <div id="v"></div>
+  </div>
+  <button class="fab" id="fab" aria-label="Add">+</button>
+  <div id="sheet"><div id="sbody"></div></div>
+  <div id="pa"></div>
+  <div id="toast"></div>
+  <script src="{{ url_for('static', filename='common.js') }}"></script>
+  <script src="{{ url_for('static', filename='depta.js') }}"></script>
+</body>
+</html>
